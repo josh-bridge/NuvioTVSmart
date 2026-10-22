@@ -53,6 +53,8 @@ export { TorrentSettingsStore } from "../../../data/local/torrentSettingsStore.j
 export { LayoutPreferences } from "../../../data/local/layoutPreferences.js";
 
 export { ExperienceModeStore } from "../../../data/local/experienceModeStore.js";
+export { MOTION_GROUPS, MotionPreferencesStore } from "../../../data/local/motionPreferencesStore.js";
+export { applyMotionPresentation, isMotionAutoReduced, shouldReduceMotion } from "../../../platform/motionPolicy.js";
 
 export { MdbListSettingsStore } from "../../../data/local/mdbListSettingsStore.js";
 

@@ -15,6 +15,10 @@ export function createSettingsScreenMethods05() {
     resolveCustomThemeColors,
     LayoutPreferences,
     ExperienceModeStore,
+    MOTION_GROUPS,
+    MotionPreferencesStore,
+    applyMotionPresentation,
+    isMotionAutoReduced,
     ProfileManager,
     isFastHorizontalNavigationEnabled,
     CW_DISPLAY_SNAPSHOT_KEY,
@@ -41,6 +45,45 @@ export function createSettingsScreenMethods05() {
       this.actionMap.set("advanced:rememberLastProfile", () => {
         ProfileManager.setRememberLastProfileEnabled(!ProfileManager.isRememberLastProfileEnabled());
       });
+      const motion = MotionPreferencesStore.get();
+      const motionModeOptions = [
+        { id: "auto", label: t("layout_perf_auto", {}, "Automatic") },
+        { id: "full", label: t("layout_perf_full", {}, "Full effects") },
+        { id: "reduced", label: t("layout_perf_reduced", {}, "Reduced effects") },
+        { id: "custom", label: t("layout_perf_custom", {}, "Custom") }
+      ];
+      // Groups without a custom value show what Auto picks on this TV.
+      const isMotionGroupEnabled = (group) =>
+        typeof motion.groups[group] === "boolean" ? motion.groups[group] : !isMotionAutoReduced(group);
+      this.actionMap.set("advanced:motionMode", () => {
+        this.openOptionDialog({
+          title: t("layout_animations_effects", {}, "Animations & effects"),
+          options: motionModeOptions,
+          selectedId: motion.mode,
+          returnFocusKey: "advanced:motionMode",
+          onSelect: (option) => {
+            MotionPreferencesStore.set({ mode: option.id });
+            applyMotionPresentation();
+          }
+        });
+      });
+      MOTION_GROUPS.forEach((group) => {
+        this.actionMap.set(`advanced:motion:${group}`, () => {
+          MotionPreferencesStore.set({ groups: { [group]: !isMotionGroupEnabled(group) } });
+          applyMotionPresentation();
+        });
+      });
+      const motionGroupRows =
+        motion.mode === "custom"
+          ? MOTION_GROUPS.map((group) =>
+              this.renderToggleRow({
+                focusKey: `advanced:motion:${group}`,
+                title: t(`motion_group_${group}`),
+                subtitle: t(`motion_group_${group}_sub`),
+                checked: isMotionGroupEnabled(group)
+              })
+            ).join("")
+          : "";
       const isEssential = model.experience?.mode === "ESSENTIAL";
       this.actionMap.set("advanced:switchExperience", () => {
         const targetMode = isEssential ? "ADVANCED" : "ESSENTIAL";
@@ -122,6 +165,13 @@ export function createSettingsScreenMethods05() {
                 ),
                 checked: Boolean(model.fastHorizontalNavigation)
               })}
+              ${this.renderActionRow({
+                focusKey: "advanced:motionMode",
+                title: t("layout_animations_effects", {}, "Animations & effects"),
+                subtitle: t("layout_animations_effects_sub", {}, "Reduce visual effects if the TV feels slow."),
+                value: motionModeOptions.find((option) => option.id === motion.mode)?.label || ""
+              })}
+              ${motionGroupRows}
               ${this.renderToggleRow({
                 focusKey: "advanced:rememberLastProfile",
                 title: t("advanced_remember_last_profile", {}, "Remember Last Profile"),

@@ -107,8 +107,8 @@
   background: rgba(13, 13, 13, 0.86);
 }
 
-.legacy-tizen .tmdb-entity-card-poster-wrap,
-.legacy-webos .tmdb-entity-card-poster-wrap {
+.motion-tizen-focus .tmdb-entity-card-poster-wrap,
+.motion-webos-focus .tmdb-entity-card-poster-wrap {
   transition: none;
 }
 

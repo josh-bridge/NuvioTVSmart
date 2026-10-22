@@ -1,3 +1,5 @@
+import { shouldReduceMotion } from "../../platform/motionPolicy.js";
+
 export const ScreenUtils = {
   // Micro-fade for fast-path TVs: returns the full enter class on capable
   // hardware, a cheap opacity-only fade class on fast-path TVs, or "" when
@@ -7,7 +9,9 @@ export const ScreenUtils = {
     if (!pending) {
       return "";
     }
-    return this.shouldSkipRouteEnter(host) ? " tizen-fade-enter" : fullClass;
+    return shouldReduceMotion("transitions", this.shouldSkipRouteEnter(host))
+      ? " tizen-fade-enter"
+      : fullClass;
   },
   isTizenFastPath(host = null) {
     return this.shouldSkipRouteEnter(host);

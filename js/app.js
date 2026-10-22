@@ -27,6 +27,7 @@ import { Platform } from "./platform/index.js";
 import { TizenCapabilities } from "./platform/tizen/tizenCapabilities.js";
 import { PluginServiceClient } from "./platform/pluginServiceClient.js";
 import { getTvRuntimePerformanceProfile } from "./platform/tvRuntimePerformance.js";
+import { applyMotionPresentation } from "./platform/motionPolicy.js";
 import { LocalStore } from "./core/storage/localStore.js";
 import { I18n } from "./i18n/index.js";
 import { getLatestAppUpdateWithRetry } from "./core/update/appUpdateService.js";
@@ -191,14 +192,16 @@ function applyPerformanceMode() {
   // handled exclusively by the runtime profile above.
   const legacyTizen = Platform.isTizen();
   const rootClasses = document.documentElement.classList;
-  const modernSidebarBlurCapable = !rootClasses.contains("no-backdrop-filter") && !constrained;
   document.documentElement.classList.toggle("performance-constrained", constrained);
   document.body.classList.toggle("performance-constrained", constrained);
-  document.documentElement.classList.toggle(
-    "modern-sidebar-blur-capable",
-    modernSidebarBlurCapable
-  );
-  document.body.classList.toggle("modern-sidebar-blur-capable", modernSidebarBlurCapable);
+  // Motion classes and sidebar blur capability follow the user's animation
+  // settings (Auto mirrors these runtime origins).
+  applyMotionPresentation({
+    constrained,
+    tizen: legacyTizen,
+    webos: legacyWebOs,
+    noBackdropFilter: rootClasses.contains("no-backdrop-filter")
+  });
   document.documentElement.classList.toggle("legacy-webos", legacyWebOs);
   document.body.classList.toggle("legacy-webos", legacyWebOs);
   document.documentElement.classList.toggle("webos-unpromoted-home-tracks", unpromotedHomeTracks);

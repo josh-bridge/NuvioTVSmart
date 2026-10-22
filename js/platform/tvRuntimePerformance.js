@@ -1,5 +1,6 @@
 import { Platform } from "./index.js";
 import { TizenCapabilities } from "./tizen/tizenCapabilities.js";
+import { shouldReduceMotion } from "./motionPolicy.js";
 
 // The first common TV generation with a modern Chromium baseline is Samsung
 // Tizen 6.5 / Chromium M85 (2022) and LG webOS TV 22 / Chromium M87 (2022).
@@ -175,16 +176,14 @@ export function resetTvRuntimePerformanceProfile() {
 // the Web fallback still waits for the asset and fades it in, but keeps only
 // one image layer alive.
 export function getTvHeroTransitionMode(profile = getTvRuntimePerformanceProfile()) {
-  if (profile?.isTvRuntime && profile.isPerformanceConstrained) {
-    return "single-layer";
-  }
+  let singleLayer = Boolean(profile?.isTvRuntime && profile.isPerformanceConstrained);
   try {
-    if (
-      globalThis?.document?.body?.classList?.contains("legacy-tizen") ||
-      globalThis?.document?.documentElement?.classList?.contains("legacy-tizen")
-    ) {
-      return "single-layer";
-    }
+    singleLayer =
+      singleLayer ||
+      Boolean(
+        globalThis?.document?.body?.classList?.contains("legacy-tizen") ||
+        globalThis?.document?.documentElement?.classList?.contains("legacy-tizen")
+      );
   } catch (_) {}
-  return "crossfade";
+  return shouldReduceMotion("hero", singleLayer) ? "single-layer" : "crossfade";
 }

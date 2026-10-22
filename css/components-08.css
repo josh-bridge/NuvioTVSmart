@@ -401,8 +401,8 @@
     linear-gradient(180deg, rgb(var(--card-bg-rgb) / 0.86), rgb(var(--bg-elevated-rgb) / 0.82));
 }
 
-.modern-sidebar-shell.performance-constrained.blur-enabled .modern-sidebar-panel,
-.modern-sidebar-shell.performance-constrained.blur-enabled .modern-sidebar-pill-chip {
+.motion-constrained-blur .modern-sidebar-shell.blur-enabled .modern-sidebar-panel,
+.motion-constrained-blur .modern-sidebar-shell.blur-enabled .modern-sidebar-pill-chip {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }

@@ -1,33 +1,33 @@
-.performance-constrained .series-detail-backdrop,
-.performance-constrained .series-detail-vignette,
-.performance-constrained .series-detail-content {
+.motion-constrained-hero .series-detail-backdrop,
+.motion-constrained-hero .series-detail-vignette,
+.motion-constrained-hero .series-detail-content {
   transition-duration: 250ms !important;
 }
 
 /* Match the Android TV detail trailer motion even on TV runtimes. These are
    opacity/size transitions and are cheap enough to retain on webOS/Tizen. */
 
-.performance-constrained .detail-trailer-layer {
+.motion-constrained-hero .detail-trailer-layer {
   transition-duration: 300ms !important;
 }
 
-.performance-constrained .series-detail-backdrop,
-.performance-constrained .series-detail-vignette {
+.motion-constrained-hero .series-detail-backdrop,
+.motion-constrained-hero .series-detail-vignette {
   transition-duration: 800ms !important;
 }
 
-.performance-constrained .series-detail-logo,
-.performance-constrained .series-detail-title,
-.performance-constrained .detail-trailer-hint,
-.performance-constrained .detail-hero-body {
+.motion-constrained-hero .series-detail-logo,
+.motion-constrained-hero .series-detail-title,
+.motion-constrained-hero .detail-trailer-hint,
+.motion-constrained-hero .detail-hero-body {
   transition-duration: 600ms !important;
 }
 
-.performance-constrained .detail-trailer-manual .series-detail-content {
+.motion-constrained-hero .detail-trailer-manual .series-detail-content {
   transition-duration: 400ms !important;
 }
 
-.performance-constrained .home-screen-shell .home-hero-backdrop {
+.motion-constrained-blur .home-screen-shell .home-hero-backdrop {
   filter: none !important;
 }
 

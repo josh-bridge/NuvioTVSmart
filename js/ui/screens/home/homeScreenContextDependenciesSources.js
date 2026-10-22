@@ -65,6 +65,7 @@ export { WatchProgressSource } from "../../../data/local/traktSettingsStore.js";
 export { watchProgressCompletedThreshold } from "../../../domain/model/watchProgress.js";
 
 export { getTvHeroTransitionMode, getTvRuntimePerformanceProfile } from "../../../platform/tvRuntimePerformance.js";
+export { shouldReduceMotion } from "../../../platform/motionPolicy.js";
 
 export { isFastHorizontalNavigationEnabled } from "../../../platform/sharedKeys.js";
 

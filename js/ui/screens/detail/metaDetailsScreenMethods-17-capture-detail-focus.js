@@ -5,6 +5,7 @@ export function createMetaDetailsScreenMethods17() {
   const {
     PlayerSettingsStore,
     getTvRuntimePerformanceProfile,
+    shouldReduceMotion,
     DETAIL_SCROLL_STIFFNESS,
     DETAIL_SCROLL_DAMPING_RATIO,
     DETAIL_SCROLL_MAX_FRAME_SECONDS,
@@ -146,7 +147,8 @@ export function createMetaDetailsScreenMethods17() {
       if (!container) {
         return;
       }
-      if (!this.isLegacyTvRuntime()) {
+      const reduceScrollMotion = shouldReduceMotion("scroll", this.isLegacyTvRuntime());
+      if (!reduceScrollMotion) {
         this.animateSpringScroll(container, axis, targetValue);
         return;
       }
@@ -163,7 +165,7 @@ export function createMetaDetailsScreenMethods17() {
       }
 
       const prefersReducedMotion = globalThis?.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-      const effectiveDuration = this.isLegacyTvRuntime()
+      const effectiveDuration = reduceScrollMotion
         ? 0
         : this.isPerformanceConstrained()
           ? Math.min(Number(duration || 150), 90)

@@ -342,10 +342,13 @@
   margin-bottom: 20px;
 }
 
-.legacy-tizen .stream-route-panel-shell {
+.motion-tizen-transitions .stream-route-panel-shell {
   opacity: 1 !important;
   transform: none !important;
   animation: none !important;
+}
+
+.legacy-tizen .stream-route-panel-shell {
   border-radius: 18px;
   height: 870px;
   min-height: 0;
@@ -363,8 +366,8 @@
   will-change: auto;
 }
 
-.legacy-tizen .stream-route-card,
-.legacy-tizen .stream-route-card.focused {
+.motion-tizen-focus .stream-route-card,
+.motion-tizen-focus .stream-route-card.focused {
   transform: none !important;
 }
 

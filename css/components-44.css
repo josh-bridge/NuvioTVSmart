@@ -351,82 +351,82 @@
   opacity: 0.6;
 }
 
-.performance-constrained * {
+.motion-constrained-ambient * {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 140ms !important;
   transition-delay: 0ms !important;
 }
 
-.performance-constrained .trakt-route-shell .settings-trakt-options-stack .settings-action-row {
+.motion-constrained-focus .trakt-route-shell .settings-trakt-options-stack .settings-action-row {
   transition: none !important;
 }
 
-.performance-constrained .player-loading-identity {
+.motion-constrained-ambient .player-loading-identity {
   animation:
     playerLoadingIdentityFade 700ms linear 400ms forwards,
     playerLoadingIdentityPulse 2000ms linear 400ms infinite alternate !important;
 }
 
-.performance-constrained .player-loading-overlay.hidden .player-loading-identity {
+.motion-constrained-ambient .player-loading-overlay.hidden .player-loading-identity {
   animation: none !important;
 }
 
-.performance-constrained .nuvio-loading-indicator-arc {
+.motion-constrained-ambient .nuvio-loading-indicator-arc {
   animation-duration: 2000ms !important;
   animation-iteration-count: infinite !important;
 }
 
-.performance-constrained .stream-route-skeleton-line {
+.motion-constrained-ambient .stream-route-skeleton-line {
   animation: streamRouteSkeletonShimmer 2.2s ease-in-out infinite !important;
 }
 
-.performance-constrained .settings-layout-preview-modern-row,
-.performance-constrained .settings-layout-preview-grid-canvas,
-.performance-constrained .settings-layout-preview-classic-row.is-featured,
-.performance-constrained.no-css-math .settings-layout-preview-modern-row,
-.performance-constrained.no-css-math .settings-layout-preview-grid-canvas,
-.performance-constrained.no-css-math .settings-layout-preview-classic-row.is-featured {
+.motion-constrained-ambient .settings-layout-preview-modern-row,
+.motion-constrained-ambient .settings-layout-preview-grid-canvas,
+.motion-constrained-ambient .settings-layout-preview-classic-row.is-featured,
+.motion-constrained-ambient .no-css-math .settings-layout-preview-modern-row,
+.motion-constrained-ambient .no-css-math .settings-layout-preview-grid-canvas,
+.motion-constrained-ambient .no-css-math .settings-layout-preview-classic-row.is-featured {
   /* Tizen fast path: preview loops kept the legacy compositor busy through
      the settings mount. Freeze on a static frame on constrained runtimes. */
   animation: none !important;
 }
 
-.performance-constrained .nuvio-route-slide-enter,
-.performance-constrained .home-route-content-enter,
-.performance-constrained .addons-route-enter,
-.performance-constrained .search-route-enter,
-.performance-constrained .library-route-enter,
-.performance-constrained .settings-route-enter,
-.performance-constrained .settings-slide-panel {
+.motion-constrained-transitions .nuvio-route-slide-enter,
+.motion-constrained-transitions .home-route-content-enter,
+.motion-constrained-transitions .addons-route-enter,
+.motion-constrained-transitions .search-route-enter,
+.motion-constrained-transitions .library-route-enter,
+.motion-constrained-transitions .settings-route-enter,
+.motion-constrained-transitions .settings-slide-panel {
   animation: none !important;
 }
 
-.performance-constrained .addons-route-content.nuvio-route-fade-enter,
-.performance-constrained .plugins-route-content.nuvio-route-fade-enter {
+.motion-constrained-transitions .addons-route-content.nuvio-route-fade-enter,
+.motion-constrained-transitions .plugins-route-content.nuvio-route-fade-enter {
   /* Tizen fast path: whole-route fade repaints the full catalog layer in
      software. Enter instantly like the other route-enters above. */
   animation: none !important;
   will-change: auto;
 }
 
-.performance-constrained .home-content-card,
-.performance-constrained .home-poster-frame,
-.performance-constrained .home-poster-card,
-.performance-constrained .home-continue-card,
-.performance-constrained .stream-route-card {
+.motion-constrained-focus .home-content-card,
+.motion-constrained-focus .home-poster-frame,
+.motion-constrained-focus .home-poster-card,
+.motion-constrained-focus .home-continue-card,
+.motion-constrained-focus .stream-route-card {
   transition-duration: 200ms !important;
   transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1) !important;
 }
 
-.performance-constrained .home-content-card.focused {
+.motion-constrained-focus .home-content-card.focused {
   transform: scale(1.005) !important;
 }
 
-.performance-constrained .home-screen-shell .home-content-card,
-.performance-constrained .home-screen-shell .home-continue-card,
-.performance-constrained .home-screen-shell .home-poster-frame,
-.performance-constrained .home-screen-shell .home-hero-card {
+.motion-constrained-focus .home-screen-shell .home-content-card,
+.motion-constrained-focus .home-screen-shell .home-continue-card,
+.motion-constrained-focus .home-screen-shell .home-poster-frame,
+.motion-constrained-focus .home-screen-shell .home-hero-card {
   transition: none !important;
 }
 
@@ -434,39 +434,39 @@
    constrained-TV animation shutdown. It runs only after the next asset has
    been preloaded; card, scroll and focus animations remain disabled. */
 
-.performance-constrained .home-screen-shell .home-hero-backdrop,
-.performance-constrained .home-screen-shell .home-hero-logo {
+.motion-constrained-hero .home-screen-shell .home-hero-backdrop,
+.motion-constrained-hero .home-screen-shell .home-hero-logo {
   transition: opacity 300ms ease !important;
 }
 
-.performance-constrained .home-screen-shell.home-layout-modern .home-hero-backdrop,
-.performance-constrained .home-screen-shell.home-layout-modern .home-hero-logo {
+.motion-constrained-hero .home-screen-shell.home-layout-modern .home-hero-backdrop,
+.motion-constrained-hero .home-screen-shell.home-layout-modern .home-hero-logo {
   transition-duration: 400ms !important;
 }
 
-.performance-constrained .home-screen-shell .home-content-card.focused,
-.performance-constrained .home-screen-shell .home-continue-card.focused,
-.performance-constrained .home-screen-shell .home-hero-card.focused,
-.performance-constrained .home-screen-shell .home-poster-card.focused .home-poster-frame {
+.motion-constrained-focus .home-screen-shell .home-content-card.focused,
+.motion-constrained-focus .home-screen-shell .home-continue-card.focused,
+.motion-constrained-focus .home-screen-shell .home-hero-card.focused,
+.motion-constrained-focus .home-screen-shell .home-poster-card.focused .home-poster-frame {
   transform: none !important;
   box-shadow: none !important;
 }
 
-.performance-constrained .home-continue-media-loading,
-.performance-constrained .home-continue-card-loading,
-.performance-constrained .home-continue-card-loading .home-continue-progress,
-.performance-constrained .home-continue-skeleton-line,
-.performance-constrained .home-modern-hero-card-loading,
-.performance-constrained .home-modern-hero-media-loading .home-hero-backdrop-loading,
-.performance-constrained .home-hero-backdrop-loading {
+.motion-constrained-ambient .home-continue-media-loading,
+.motion-constrained-ambient .home-continue-card-loading,
+.motion-constrained-ambient .home-continue-card-loading .home-continue-progress,
+.motion-constrained-ambient .home-continue-skeleton-line,
+.motion-constrained-ambient .home-modern-hero-card-loading,
+.motion-constrained-ambient .home-modern-hero-media-loading .home-hero-backdrop-loading,
+.motion-constrained-ambient .home-hero-backdrop-loading {
   animation: none !important;
 }
 
-.performance-constrained .modern-sidebar-panel,
-.performance-constrained .modern-sidebar-pill-chip,
-.performance-constrained .series-episode-card,
-.performance-constrained .series-stream-panel,
-.performance-constrained .stream-route-panel-shell {
+.motion-constrained-blur .modern-sidebar-panel,
+.motion-constrained-blur .modern-sidebar-pill-chip,
+.motion-constrained-blur .series-episode-card,
+.motion-constrained-blur .series-stream-panel,
+.motion-constrained-blur .stream-route-panel-shell {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }

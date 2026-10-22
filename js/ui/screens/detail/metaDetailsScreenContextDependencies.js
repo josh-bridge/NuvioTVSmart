@@ -59,6 +59,7 @@ import { Environment } from "../../../platform/environment.js";
 import { Platform } from "../../../platform/index.js";
 
 import { getTvRuntimePerformanceProfile } from "../../../platform/tvRuntimePerformance.js";
+import { shouldReduceMotion } from "../../../platform/motionPolicy.js";
 
 import { TMDB_API_KEY, TRAKT_API_URL, TRAKT_CLIENT_ID, YOUTUBE_PROXY_URL } from "../../../config.js";
 
@@ -347,6 +348,7 @@ export {
   Environment,
   Platform,
   getTvRuntimePerformanceProfile,
+  shouldReduceMotion,
   TMDB_API_KEY,
   TRAKT_API_URL,
   TRAKT_CLIENT_ID,

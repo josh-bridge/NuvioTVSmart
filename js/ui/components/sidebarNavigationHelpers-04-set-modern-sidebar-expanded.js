@@ -12,6 +12,8 @@ import { I18n } from "../../i18n/index.js";
 
 import { getTvRuntimePerformanceProfile } from "../../platform/tvRuntimePerformance.js";
 
+import { shouldReduceMotion } from "../../platform/motionPolicy.js";
+
 import { syncSidebarStateClasses, scheduleRootSidebarTextFit } from "./sidebarNavigationHelpers-01-root-sidebar-items.js";
 
 export function setModernSidebarExpanded(container, expanded) {
@@ -24,11 +26,13 @@ export function setModernSidebarExpanded(container, expanded) {
   // open/close feels wired instead of laggy. Class hooks
   // (performance-constrained / legacy-tizen) are set in js/app.js.
   const doc = globalThis?.document || null;
-  const fastPath =
+  const fastPath = shouldReduceMotion(
+    "transitions",
     Boolean(doc?.body?.classList?.contains("performance-constrained")) ||
-    Boolean(doc?.documentElement?.classList?.contains("performance-constrained")) ||
-    Boolean(doc?.body?.classList?.contains("legacy-tizen")) ||
-    Boolean(doc?.documentElement?.classList?.contains("legacy-tizen"));
+      Boolean(doc?.documentElement?.classList?.contains("performance-constrained")) ||
+      Boolean(doc?.body?.classList?.contains("legacy-tizen")) ||
+      Boolean(doc?.documentElement?.classList?.contains("legacy-tizen"))
+  );
   if (fastPath) {
     if (shell._modernOpenTimer) {
       clearTimeout(shell._modernOpenTimer);

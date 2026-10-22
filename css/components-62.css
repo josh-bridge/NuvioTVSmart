@@ -942,10 +942,10 @@
   }
 }
 
-.performance-constrained .party-presence-busy > span,
-.performance-constrained .party-code-caret,
-.performance-constrained .party-pulsing-dot,
-.performance-constrained .player-party-panel,
-.performance-constrained .party-joined-title {
+.motion-constrained-ambient .party-presence-busy > span,
+.motion-constrained-ambient .party-code-caret,
+.motion-constrained-ambient .party-pulsing-dot,
+.motion-constrained-ambient .player-party-panel,
+.motion-constrained-ambient .party-joined-title {
   animation: none;
 }

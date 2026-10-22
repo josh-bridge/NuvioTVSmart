@@ -24,9 +24,9 @@
   overflow: hidden;
 }
 
-.home-sidebar.performance-constrained,
-.home-sidebar.performance-constrained .home-nav-item,
-.home-sidebar.performance-constrained .home-nav-label {
+.motion-constrained-transitions .home-sidebar,
+.motion-constrained-transitions .home-sidebar .home-nav-item,
+.motion-constrained-transitions .home-sidebar .home-nav-label {
   transition: none;
 }
 

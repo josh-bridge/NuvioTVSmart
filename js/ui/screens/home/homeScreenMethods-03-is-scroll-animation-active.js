@@ -5,6 +5,7 @@ export function createHomeScreenMethods03() {
     Router,
     Platform,
     getTvRuntimePerformanceProfile,
+    shouldReduceMotion,
     isFastHorizontalNavigationEnabled,
     MODERN_HOME_CONSTANTS,
     CW_RENDER_BATCH_ITEMS_CONSTRAINED,
@@ -184,10 +185,11 @@ export function createHomeScreenMethods03() {
       );
     },
     shouldUseImmediateFocusScroll() {
-      return (
+      return shouldReduceMotion(
+        "scroll",
         this.isPerformanceConstrained() ||
-        globalThis?.document?.body?.classList?.contains("legacy-tizen") ||
-        globalThis?.document?.documentElement?.classList?.contains("legacy-tizen")
+          globalThis?.document?.body?.classList?.contains("legacy-tizen") ||
+          globalThis?.document?.documentElement?.classList?.contains("legacy-tizen")
       );
     },
     hasCollectionHomeRows() {
@@ -252,16 +254,16 @@ export function createHomeScreenMethods03() {
     },
     getScrollDuration(base) {
       const baseline = Number.isFinite(base) ? base : 150;
-      if (this.isLegacyTvRuntime()) {
-        return 0;
+      if (!shouldReduceMotion("scroll", this.isLegacyTvRuntime() || this.isPerformanceConstrained())) {
+        return baseline + 40;
       }
-      if (this.isPerformanceConstrained()) {
+      if (this.isPerformanceConstrained() && !this.isLegacyTvRuntime()) {
         return Math.min(baseline, 90);
       }
-      return baseline + 40;
+      return 0;
     },
     shouldUseImmediateHorizontalScrollForNode(node) {
-      return Boolean(node?.matches?.(".home-continue-card.focusable") && this.isPerformanceConstrained());
+      return Boolean(node?.matches?.(".home-continue-card.focusable") && shouldReduceMotion("scroll", this.isPerformanceConstrained()));
     },
     shouldDeferContinueWatchingFocusEffects(node, direction = null, inputMeta = null) {
       void inputMeta;
