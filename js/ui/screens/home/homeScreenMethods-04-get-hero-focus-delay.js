@@ -112,7 +112,10 @@ export function createHomeScreenMethods04() {
 
   return {
     getHeroFocusDelay({ rapid = false } = {}) {
-      if (this.isLegacyTvRuntime()) {
+      // The short legacy delays assume instant focus jumps. With smooth
+      // scrolling re-enabled, use the modern settle delays so the backdrop
+      // swap does not land mid-scroll.
+      if (this.isLegacyTvRuntime() && this.shouldUseImmediateFocusScroll()) {
         return rapid ? 260 : 150;
       }
       return rapid ? MODERN_HOME_CONSTANTS.heroRapidSettleMs : MODERN_HOME_CONSTANTS.heroFocusDelayMs;

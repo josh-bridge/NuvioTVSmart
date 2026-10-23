@@ -1,5 +1,9 @@
 import * as internals from "./homeScreenContext.js";
 
+const LEGACY_SMOOTH_VERTICAL_SCROLL_MS = 360;
+// Gentler start than the default cubic ease-out, which front-loads the move.
+const easeOutQuad = (t) => 1 - (1 - t) * (1 - t);
+
 export function createHomeScreenMethods17() {
   const { MODERN_HOME_CONSTANTS } = internals;
 
@@ -164,6 +168,13 @@ export function createHomeScreenMethods17() {
             return;
           }
           this.modernCameraFollowLastVerticalContainer = next.container;
+          if (this.isLegacyTvRuntime()) {
+            // Legacy TVs repaint every visible row on each vertical scroll
+            // frame. The spring's long sub-pixel tail turns into hundreds of ms
+            // of full repaints, so use a short whole-pixel ease-out instead.
+            this.animateScroll(next.container, "y", next.value, LEGACY_SMOOTH_VERTICAL_SCROLL_MS, { easing: easeOutQuad });
+            return;
+          }
           this.animateSpringScroll(next.container, "y", next.value);
         });
         return;

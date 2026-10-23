@@ -14,8 +14,11 @@ export function createHomeScreenMethods18() {
       this.refreshPendingHomeTrailerCleanup();
       const focusStart = HOME_PERF_DEBUG ? homePerfNow() : 0;
       const scrollAdjustments = this.getExpandedPosterScrollAdjustments(current, target, direction);
+      // Legacy TVs always collapse instantly: an animated collapse changes row
+      // heights while a vertical scroll is running, so the rows visibly bounce.
       const shouldInstantCollapseExpandedPoster =
-        this.layoutMode === "modern" && (direction === "left" || direction === "right" || this.shouldUseImmediateFocusScroll());
+        this.layoutMode === "modern" &&
+        (direction === "left" || direction === "right" || this.shouldUseImmediateFocusScroll() || this.isLegacyTvRuntime());
       if (this.layoutMode === "modern" && this.expandedPosterNode && this.expandedPosterNode !== target) {
         this.collapseFocusedPoster(this.expandedPosterNode, {
           instant: shouldInstantCollapseExpandedPoster

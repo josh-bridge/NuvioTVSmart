@@ -258,12 +258,11 @@ export function createHomeScreenMethods02() {
         state.position += state.velocity * deltaSeconds;
         container[property] = state.position;
 
-        // Reading scroll position after writing it can flush layout. It only
-        // affects settling once velocity is low enough; keep that check first.
-        if (
-          Math.abs(state.velocity) <= state.velocityEpsilon &&
-          Math.abs(Number(state.target || 0) - Number(container[property] || 0)) <= state.precision
-        ) {
+        // Settle on the simulated position rather than the container's: if the
+        // track shrinks mid-animation the browser clamps scroll below the target
+        // and a container-based check never settles, leaving this loop (and
+        // everything that waits for scrolling to stop) running forever.
+        if (Math.abs(state.velocity) <= state.velocityEpsilon && Math.abs(Number(state.target || 0) - state.position) <= state.precision) {
           container[property] = state.target;
           existing[key] = null;
           springMap.set(container, existing);

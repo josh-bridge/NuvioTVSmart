@@ -1,5 +1,7 @@
 import * as internals from "./homeScreenContext.js";
 
+const HERO_SCROLL_SETTLE_MAX_WAIT_MS = 1200;
+
 export function createHomeScreenMethods10() {
   const { MODERN_HOME_CONSTANTS, getTvRuntimePerformanceProfile, shouldEnrichModernHero, preloadHeroAssets, buildHeroIdentity } = internals;
 
@@ -33,8 +35,18 @@ export function createHomeScreenMethods10() {
       }
       const canPreloadHeroDuringVerticalScroll =
         deferUntilVerticalSettle && getTvRuntimePerformanceProfile().isTvRuntime && !this.isPerformanceConstrained();
+      // Legacy TVs with smooth scrolling re-enabled cannot decode a full-screen
+      // backdrop while a row is still gliding, so hold the hero until every
+      // Home scroll (either axis) settles. The wait is capped so a scroll that
+      // never reports settling cannot block the hero indefinitely.
+      const waitForAllScrolls = this.isLegacyTvRuntime() && !this.shouldUseImmediateFocusScroll();
+      const scrollWaitDeadline = Date.now() + delay + HERO_SCROLL_SETTLE_MAX_WAIT_MS;
+      const isAnyScrollActive = () => waitForAllScrolls && Date.now() < scrollWaitDeadline && this.shouldSuspendModernViewportFocusSync();
       const waitForVerticalSettle = (callback) => {
-        if (deferUntilVerticalSettle && !canPreloadHeroDuringVerticalScroll && this.isModernVerticalScrollActive()) {
+        if (
+          (deferUntilVerticalSettle && !canPreloadHeroDuringVerticalScroll && this.isModernVerticalScrollActive()) ||
+          isAnyScrollActive()
+        ) {
           this.heroBackdropPreloadTimer = setTimeout(
             () => waitForVerticalSettle(callback),
             MODERN_HOME_CONSTANTS.verticalScrollSettlePollMs
@@ -62,7 +74,7 @@ export function createHomeScreenMethods10() {
         });
       }, preloadDelay);
       const commitHeroWhenSettled = () => {
-        if (deferUntilVerticalSettle && this.isModernVerticalScrollActive()) {
+        if ((deferUntilVerticalSettle && this.isModernVerticalScrollActive()) || isAnyScrollActive()) {
           this.heroFocusDelayTimer = setTimeout(commitHeroWhenSettled, MODERN_HOME_CONSTANTS.verticalScrollSettlePollMs);
           return;
         }
